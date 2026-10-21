@@ -21,39 +21,58 @@ std::string AUTHOR_AUTHORSHIP = "I acknowledge that I have worked on this assign
 DoubleNode::DoubleNode(NodeValue newValue)
 {
     // TODO: move the initialization of all three fields into an initializer list
+    this->value = newValue;
+    this->nextPtr = nullptr;
+    this->prevPtr = nullptr;   
 }
 
 /// Const getter: return the stored value.
 NodeValue DoubleNode::getValue() const
 {
     // TODO: return the value field
-    return NodeValue{};
+    return NodeValue{this->value};
 }
 
 /// Const getter: return the previous node (or nullptr).
 DoubleNode *DoubleNode::getPrev() const
 {
     // TODO: return the prevPtr field
-    return nullptr;
+    if (this->prevPtr != nullptr)
+    {
+        return this->prevPtr;
+    }
+    else
+    {
+        return nullptr;
+    }
 }
 
 /// Const getter: return the next node (or nullptr).
 DoubleNode *DoubleNode::getNext() const
 {
     // TODO: return the nextPtr field
-    return nullptr;
+    if (this->nextPtr != nullptr)
+    {
+        return this->nextPtr;
+    }
+    else
+    {
+        return nullptr;
+    }
 }
 
 /// Setter: store newPrevPtr in prevPtr.
 void DoubleNode::setPrev(DoubleNode *newPrevPtr)
 {
     // TODO: assign the field
+    this->prevPtr = newPrevPtr;
 }
 
 /// Setter: store newNextPtr in nextPtr.
 void DoubleNode::setNext(DoubleNode *newNextPtr)
 {
     // TODO: assign the field
+    this->nextPtr = newNextPtr;
 }
 
 // ============================================================
