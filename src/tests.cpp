@@ -13,21 +13,30 @@
 /// Create a DoublyLinkedList. Verify length() is 0 on a new list.
 void test_new_list_is_empty(void)
 {
-    TEST_ASSERT_TRUE_MESSAGE(0, "TODO: Implement this test");
+    DoublyLinkedList dlList;
+    TEST_ASSERT_EQUAL(0, dlList.length());
 }
 
 /// Create a DoublyLinkedList. Call pushFrontValue and pushBackValue.
 /// Verify length() is 2.
 void test_push_increases_length(void)
 {
-    TEST_ASSERT_TRUE_MESSAGE(0, "TODO: Implement this test");
+    DoublyLinkedList dlList;
+    dlList.pushFrontValue(4);
+    dlList.pushBackValue(5);
+    TEST_ASSERT_EQUAL(2, dlList.length());
 }
 
 /// Create an EMPTY DoublyLinkedList.
 /// Verify popFrontValue() and popBackValue() both have NO value (has_value() is false).
 void test_pop_on_empty_list(void)
 {
-    TEST_ASSERT_TRUE_MESSAGE(0, "TODO: Implement this test");
+    DoublyLinkedList dlList;
+    bool frontResult = dlList.popFrontValue().has_value();
+    bool backResult = dlList.popBackValue().has_value();
+
+    TEST_ASSERT_EQUAL(false, frontResult);
+    TEST_ASSERT_EQUAL(false, backResult);
 }
 
 /// Push 1, 2, 3 with pushBackValue.
