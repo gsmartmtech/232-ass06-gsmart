@@ -37,7 +37,7 @@ NodeValue DoubleNode::getValue() const
 DoubleNode *DoubleNode::getPrev() const
 {
     // TODO: return the prevPtr field
-    if (this->prevPtr != nullptr)
+    if (this != nullptr)
     {
         return this->prevPtr;
     }
@@ -51,7 +51,7 @@ DoubleNode *DoubleNode::getPrev() const
 DoubleNode *DoubleNode::getNext() const
 {
     // TODO: return the nextPtr field
-    if (this->nextPtr != nullptr)
+    if (this != nullptr)
     {
         return this->nextPtr;
     }
@@ -180,15 +180,18 @@ void DoublyLinkedList::pushFrontValue(NodeValue value)
 {
     // TODO: implement
     DoubleNode * newNode = new DoubleNode(value);
-    if (this->headPtr->getNext() == nullptr)
+    if (this->headPtr == nullptr)
     {
-        this->headPtr->setNext(newNode);
+        this->headPtr = newNode;
+        this->tailPtr = newNode;
+        this->count += 1;
     }
     else
     {
         this->headPtr->getNext()->setPrev(newNode);
         newNode->setNext(this->headPtr->getNext());
         this->headPtr->setNext(newNode);
+        this->count += 1;
     }
 }
 
@@ -197,13 +200,18 @@ void DoublyLinkedList::pushBackValue(NodeValue value)
 {
     // TODO: implement
     DoubleNode * newNode = new DoubleNode(value);
-    if (this->headPtr->getNext() == nullptr)
+    if (this->headPtr == nullptr)
     {
-        this->headPtr->setNext(newNode);
+        this->headPtr = newNode;
+        this->tailPtr = newNode;
+        this->count += 1;
     }
     else
     {
         this->tailPtr->setNext(newNode);
+        newNode->setPrev(this->tailPtr);
+        this->tailPtr = newNode;
+        this->count += 1;
     }
 }
 
@@ -215,9 +223,12 @@ std::optional<NodeValue> DoublyLinkedList::popFrontValue()
     if (this->headPtr->getNext() != nullptr)
     {
         DoubleNode * detachedNode = this->detachFirst();
-        std::variant valToReturn = detachedNode->getValue();
+        NodeValue valToReturn = detachedNode->getValue();
         delete detachedNode;
+        this->count -= 1;
         return valToReturn;
+
+
     }
     else
     {
@@ -234,6 +245,7 @@ std::optional<NodeValue> DoublyLinkedList::popBackValue()
         DoubleNode * detachedNode = this->detachLast();
         std::variant valToReturn = detachedNode->getValue();
         delete detachedNode;
+        this->count -= 1;
         return valToReturn;
     }
     else
