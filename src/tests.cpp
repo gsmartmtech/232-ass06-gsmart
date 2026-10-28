@@ -76,11 +76,11 @@ void test_delete_middle_keeps_links(void)
     dlList.pushBackValue(3);
 
     dlList.deleteValue(2);
-    std::optional<NodeValue> backResult = dlList.popBackValue();
-    std::optional<NodeValue> frontResult = dlList.popFrontValue();
+    std::optional<NodeValue> result1 = dlList.popBackValue();
+    std::optional<NodeValue> result2 = dlList.popBackValue();
 
-    TEST_ASSERT_EQUAL(3, std::get<int>(backResult.value()));
-    TEST_ASSERT_EQUAL(1, std::get<int>(frontResult.value()));
+    TEST_ASSERT_EQUAL(3, std::get<int>(result1.value()));
+    TEST_ASSERT_EQUAL(1, std::get<int>(result2.value()));
 }
 
 // ============================================================
@@ -91,12 +91,28 @@ void test_delete_middle_keeps_links(void)
 /// Verify length() is 2 and popFrontValue() gives 2 (only the FIRST 1 was removed).
 void test_std_delete_only_first(void)
 {
-    TEST_ASSERT_TRUE_MESSAGE(0, "TODO: Implement this test");
+    StdDoublyLinkedList list;
+    list.pushBackValue(1);
+    list.pushBackValue(2);
+    list.pushBackValue(1);
+
+    // is deleting both 1's, fix it
+    list.deleteValue(1);
+
+    std::optional<NodeValue> popResult = list.popFrontValue();
+
+    TEST_ASSERT_EQUAL(2, list.length());
+    TEST_ASSERT_EQUAL(2, std::get<int>(popResult.value()));
 }
 
 /// Create an EMPTY StdDoublyLinkedList.
 /// Verify popFrontValue() and popBackValue() have NO value and do not crash.
 void test_std_pop_on_empty_list(void)
 {
-    TEST_ASSERT_TRUE_MESSAGE(0, "TODO: Implement this test");
+    StdDoublyLinkedList list;
+
+    std::optional<NodeValue> popFrontResult = list.popFrontValue();
+    std::optional<NodeValue> popBackResult = list.popFrontValue();
+    TEST_ASSERT_EQUAL(nullptr, std::get<int>(popFrontResult.value()));
+    TEST_ASSERT_EQUAL(nullptr, std::get<int>(popBackResult.value()));
 }

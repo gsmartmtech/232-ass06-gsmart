@@ -130,7 +130,7 @@ DoubleNode *DoublyLinkedList::detachLast()
 {
     // TODO: implement
     DoubleNode * currentPtr = this->headPtr;
-    if (this->headPtr->getNext() == nullptr)
+    if (this->headPtr == nullptr)
     {
         return nullptr;
     }
@@ -140,8 +140,16 @@ DoubleNode *DoublyLinkedList::detachLast()
         {
             currentPtr = currentPtr->getNext();
         }
-        currentPtr->getPrev()->setNext(nullptr);
-        this->tailPtr = currentPtr->getPrev();
+        if (this->headPtr->getNext() != nullptr)
+        {
+            currentPtr->getPrev()->setNext(nullptr);
+            this->tailPtr = currentPtr->getPrev();
+        }
+        else
+        {
+            this->headPtr = nullptr;
+            this->tailPtr = nullptr;
+        }
         currentPtr->setNext(nullptr);
         currentPtr->setPrev(nullptr);
         this->count -= 1;
@@ -361,7 +369,7 @@ void StdDoublyLinkedList::pushBackValue(NodeValue value)
 std::optional<NodeValue> StdDoublyLinkedList::popFrontValue()
 {
     // TODO: implement
-    if (this->data.front() != nullptr)
+    if (this->data.empty() != true)
     {
         NodeValue result = this->data.front();
         this->data.pop_front();
@@ -377,27 +385,58 @@ std::optional<NodeValue> StdDoublyLinkedList::popFrontValue()
 std::optional<NodeValue> StdDoublyLinkedList::popBackValue()
 {
     // TODO: implement
-    return std::nullopt;
+    if (this->data.empty() != true)
+    {
+        NodeValue result = this->data.back();
+        this->data.pop_back();
+        return result;
+    }
+    else
+    {
+        return std::nullopt;
+    }
 }
 
 /// Remove only the FIRST element equal to value. Return true if removed.
 bool StdDoublyLinkedList::deleteValue(NodeValue value)
 {
     // TODO: implement
-    return false;
+    if (this->data.remove(value) > 0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 /// Search without writing your own loop.
 bool StdDoublyLinkedList::containsValue(NodeValue value) const
 {
     // TODO: implement
-    return false;
+    auto result = std::find(this->data.begin(), this->data.end(), value);
+    if (result != this->data.end())
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 /// Print head -> tail (same format as Part 2). Return the number of values.
 int StdDoublyLinkedList::printForward() const
 {
     // TODO: implement
+    int count = 0;
+    for (int i = 0; i < this->data.size(); i++)
+    {
+        NodeValue result = this->data.front();
+        std::cout << std::get<std::string, int, double>(result) << std::endl;
+        count++;
+    }
     return 0;
 }
 
@@ -412,6 +451,6 @@ int StdDoublyLinkedList::printBackward() const
 int StdDoublyLinkedList::length() const
 {
     // TODO: implement
-    return 0;
+    return this->data.size();
 }
 // ===== END PART 3 (do not remove this marker) =====
