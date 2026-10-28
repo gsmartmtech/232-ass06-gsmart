@@ -39,7 +39,7 @@ DoubleNode *DoubleNode::getPrev() const
     // TODO: return the prevPtr field
     if (this != nullptr)
     {
-        return this->prevPtr;
+        return prevPtr;
     }
     else
     {
@@ -53,7 +53,7 @@ DoubleNode *DoubleNode::getNext() const
     // TODO: return the nextPtr field
     if (this != nullptr)
     {
-        return this->nextPtr;
+        return nextPtr;
     }
     else
     {
@@ -65,14 +65,14 @@ DoubleNode *DoubleNode::getNext() const
 void DoubleNode::setPrev(DoubleNode *newPrevPtr)
 {
     // TODO: assign the field
-    this->prevPtr = newPrevPtr;
+    prevPtr = newPrevPtr;
 }
 
 /// Setter: store newNextPtr in nextPtr.
 void DoubleNode::setNext(DoubleNode *newNextPtr)
 {
     // TODO: assign the field
-    this->nextPtr = newNextPtr;
+    nextPtr = newNextPtr;
 }
 
 // ============================================================
@@ -108,14 +108,15 @@ DoublyLinkedList::~DoublyLinkedList()
 DoubleNode *DoublyLinkedList::detachFirst()
 {
     // TODO: implement
-    if (this->headPtr->getNext() == nullptr)
+    if (this->headPtr == nullptr)
     {
         return nullptr;
     }
     else
     {
-        DoubleNode *detachedNode = this->headPtr->getNext();
-        this->headPtr->setNext(detachedNode->getNext());
+        DoubleNode *detachedNode = this->headPtr;
+        this->headPtr = detachedNode->getNext();
+        this->headPtr->setPrev(nullptr);
         detachedNode->setNext(nullptr);
         detachedNode->setPrev(nullptr);
         this->count -= 1;
@@ -135,11 +136,12 @@ DoubleNode *DoublyLinkedList::detachLast()
     }
     else
     {
-        while (currentPtr != nullptr)
+        while (currentPtr->getNext() != nullptr)
         {
             currentPtr = currentPtr->getNext();
         }
         currentPtr->getPrev()->setNext(nullptr);
+        this->tailPtr = currentPtr->getPrev();
         currentPtr->setNext(nullptr);
         currentPtr->setPrev(nullptr);
         this->count -= 1;
@@ -223,7 +225,7 @@ std::optional<NodeValue> DoublyLinkedList::popFrontValue()
     if (this->headPtr->getNext() != nullptr)
     {
         DoubleNode * detachedNode = this->detachFirst();
-        NodeValue valToReturn = detachedNode->getValue();
+        std::variant valToReturn = detachedNode->getValue();
         delete detachedNode;
         this->count -= 1;
         return valToReturn;
@@ -346,20 +348,29 @@ int DoublyLinkedList::length() const
 /// Which std::list method inserts at the front?
 void StdDoublyLinkedList::pushFrontValue(NodeValue value)
 {
-    // TODO: implement
+    this->data.push_front(value);
 }
 
 /// Which std::list method inserts at the back?
 void StdDoublyLinkedList::pushBackValue(NodeValue value)
 {
-    // TODO: implement
+    this->data.push_back(value);
 }
 
 /// Read the front element, remove it, return it. Empty -> std::nullopt.
 std::optional<NodeValue> StdDoublyLinkedList::popFrontValue()
 {
     // TODO: implement
-    return std::nullopt;
+    if (this->data.front() != nullptr)
+    {
+        NodeValue result = this->data.front();
+        this->data.pop_front();
+        return result;
+    }
+    else
+    {
+        return std::nullopt;
+    }
 }
 
 /// Read the back element, remove it, return it. Empty -> std::nullopt.

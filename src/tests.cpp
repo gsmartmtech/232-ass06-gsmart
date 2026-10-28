@@ -49,7 +49,7 @@ void test_pop_order(void)
     dlList.pushBackValue(3);
 
     std::optional<NodeValue> backResult = dlList.popBackValue();
-    std::optional<NodeValue> frontResult = dlList.popBackValue();
+    std::optional<NodeValue> frontResult = dlList.popFrontValue();
 
     TEST_ASSERT_EQUAL(3, std::get<int>(backResult.value()));
     TEST_ASSERT_EQUAL(1, std::get<int>(frontResult.value()));
@@ -59,7 +59,10 @@ void test_pop_order(void)
 /// Verify it returns false and length() does not change.
 void test_delete_value_not_found(void)
 {
-    TEST_ASSERT_TRUE_MESSAGE(0, "TODO: Implement this test");
+    DoublyLinkedList dlList;
+    dlList.pushBackValue(1);
+
+    TEST_ASSERT_EQUAL(nullptr, dlList.deleteValue(2));
 }
 
 /// Push 1, 2, 3 with pushBackValue. Call deleteValue(2).
@@ -67,7 +70,17 @@ void test_delete_value_not_found(void)
 /// (popBackValue follows prevPtr: this fails if you forgot to repair the backward link.)
 void test_delete_middle_keeps_links(void)
 {
-    TEST_ASSERT_TRUE_MESSAGE(0, "TODO: Implement this test");
+    DoublyLinkedList dlList;
+    dlList.pushBackValue(1);
+    dlList.pushBackValue(2);
+    dlList.pushBackValue(3);
+
+    dlList.deleteValue(2);
+    std::optional<NodeValue> backResult = dlList.popBackValue();
+    std::optional<NodeValue> frontResult = dlList.popFrontValue();
+
+    TEST_ASSERT_EQUAL(3, std::get<int>(backResult.value()));
+    TEST_ASSERT_EQUAL(1, std::get<int>(frontResult.value()));
 }
 
 // ============================================================
