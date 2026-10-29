@@ -401,8 +401,10 @@ std::optional<NodeValue> StdDoublyLinkedList::popBackValue()
 bool StdDoublyLinkedList::deleteValue(NodeValue value)
 {
     // TODO: implement
-    if (this->data.remove(value) > 0)
+    auto result = std::find(this->data.begin(), this->data.end(), value);
+    if (result != this->data.end())
     {
+        this->data.erase(result);
         return true;
     }
     else
@@ -431,20 +433,48 @@ int StdDoublyLinkedList::printForward() const
 {
     // TODO: implement
     int count = 0;
-    for (int i = 0; i < this->data.size(); i++)
+    for (auto value : this->data)
     {
-        NodeValue result = this->data.front();
-        std::cout << std::get<std::string, int, double>(result) << std::endl;
+
+        if (std::holds_alternative<int>(value))
+        {
+            std::cout << std::get<int>(value) << std::endl;
+        }
+        else if (std::holds_alternative<double>(value))
+        {
+            std::cout << std::get<double>(value) << std::endl;
+        }
+        else if (std::holds_alternative<std::string>(value))
+        {
+            std::cout << std::get<std::string>(value) << std::endl;
+        }
         count++;
     }
-    return 0;
+    return count;
 }
 
 /// Print tail -> head (same format as Part 2). Return the number of values.
 int StdDoublyLinkedList::printBackward() const
 {
-    // TODO: implement
-    return 0;
+    int count = 0;
+    for (auto value : this->data.reverse())
+    {
+
+        if (std::holds_alternative<int>(value))
+        {
+            std::cout << std::get<int>(value) << std::endl;
+        }
+        else if (std::holds_alternative<double>(value))
+        {
+            std::cout << std::get<double>(value) << std::endl;
+        }
+        else if (std::holds_alternative<std::string>(value))
+        {
+            std::cout << std::get<std::string>(value) << std::endl;
+        }
+        count++;
+    }
+    return count;
 }
 
 /// size() returns size_t, length() returns int.

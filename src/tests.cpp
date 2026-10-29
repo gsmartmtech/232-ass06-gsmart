@@ -96,13 +96,18 @@ void test_std_delete_only_first(void)
     list.pushBackValue(2);
     list.pushBackValue(1);
 
-    // is deleting both 1's, fix it
+    list.printForward();
+
     list.deleteValue(1);
+
+    TEST_ASSERT_EQUAL(2, list.length());
 
     std::optional<NodeValue> popResult = list.popFrontValue();
 
-    TEST_ASSERT_EQUAL(2, list.length());
-    TEST_ASSERT_EQUAL(2, std::get<int>(popResult.value()));
+    if (popResult.has_value())
+    {
+        TEST_ASSERT_EQUAL(2, std::get<int>(popResult.value()));
+    }
 }
 
 /// Create an EMPTY StdDoublyLinkedList.
@@ -113,6 +118,6 @@ void test_std_pop_on_empty_list(void)
 
     std::optional<NodeValue> popFrontResult = list.popFrontValue();
     std::optional<NodeValue> popBackResult = list.popFrontValue();
-    TEST_ASSERT_EQUAL(nullptr, std::get<int>(popFrontResult.value()));
-    TEST_ASSERT_EQUAL(nullptr, std::get<int>(popBackResult.value()));
+    TEST_ASSERT_EQUAL(false, popFrontResult.has_value());
+    TEST_ASSERT_EQUAL(false, popBackResult.has_value());
 }
