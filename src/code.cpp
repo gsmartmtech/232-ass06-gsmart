@@ -37,7 +37,7 @@ NodeValue DoubleNode::getValue() const
 DoubleNode *DoubleNode::getPrev() const
 {
     // TODO: return the prevPtr field
-    if (this != nullptr)
+    if (this->prevPtr != nullptr)
     {
         return prevPtr;
     }
@@ -51,7 +51,7 @@ DoubleNode *DoubleNode::getPrev() const
 DoubleNode *DoubleNode::getNext() const
 {
     // TODO: return the nextPtr field
-    if (this != nullptr)
+    if (this->nextPtr != nullptr)
     {
         return nextPtr;
     }
@@ -94,9 +94,9 @@ DoublyLinkedList::~DoublyLinkedList()
     // TODO: walk through the list and delete every node
     while (this->count > 0)
     {
-      DoubleNode *nodeToDelete = this->headPtr->getNext();
+      DoubleNode *nodeToDelete = this->headPtr;
       // node contains prevPtr and nextPtr, don't need to deal with prevPtr as we are deleting whole list in order
-      this->headPtr->setNext(nodeToDelete->getNext());
+      this->headPtr = nodeToDelete->getNext();
       delete nodeToDelete;
       count -= 1;
     }
@@ -230,7 +230,7 @@ void DoublyLinkedList::pushBackValue(NodeValue value)
 std::optional<NodeValue> DoublyLinkedList::popFrontValue()
 {
     // TODO: implement
-    if (this->headPtr->getNext() != nullptr)
+    if (this->headPtr != nullptr)
     {
         DoubleNode * detachedNode = this->detachFirst();
         std::variant valToReturn = detachedNode->getValue();
