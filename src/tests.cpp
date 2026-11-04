@@ -96,8 +96,6 @@ void test_std_delete_only_first(void)
     list.pushBackValue(2);
     list.pushBackValue(1);
 
-    list.printForward();
-
     list.deleteValue(1);
 
     TEST_ASSERT_EQUAL(2, list.length());

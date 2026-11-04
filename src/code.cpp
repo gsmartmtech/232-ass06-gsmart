@@ -432,23 +432,12 @@ bool StdDoublyLinkedList::containsValue(NodeValue value) const
 int StdDoublyLinkedList::printForward() const
 {
     // TODO: implement
-    int count = 0;
-    for (auto value : this->data)
-    {
 
-        if (std::holds_alternative<int>(value))
-        {
-            std::cout << std::get<int>(value) << std::endl;
-        }
-        else if (std::holds_alternative<double>(value))
-        {
-            std::cout << std::get<double>(value) << std::endl;
-        }
-        else if (std::holds_alternative<std::string>(value))
-        {
-            std::cout << std::get<std::string>(value) << std::endl;
-        }
-        count++;
+    int count = 0;
+    for (std::variant<int, double, std::string> v: this->data)
+    {
+        std::visit([](auto x) { std::cout << x << " "; }, v);
+        count ++;
     }
     return count;
 }
@@ -457,22 +446,10 @@ int StdDoublyLinkedList::printForward() const
 int StdDoublyLinkedList::printBackward() const
 {
     int count = 0;
-    for (auto value : this->data.reverse())
+    for (std::variant<int, double, std::string> v: this->data.rbegin())
     {
-
-        if (std::holds_alternative<int>(value))
-        {
-            std::cout << std::get<int>(value) << std::endl;
-        }
-        else if (std::holds_alternative<double>(value))
-        {
-            std::cout << std::get<double>(value) << std::endl;
-        }
-        else if (std::holds_alternative<std::string>(value))
-        {
-            std::cout << std::get<std::string>(value) << std::endl;
-        }
-        count++;
+        std::visit([](auto x) { std::cout << x << " "; }, v);
+        count ++;
     }
     return count;
 }
@@ -481,6 +458,6 @@ int StdDoublyLinkedList::printBackward() const
 int StdDoublyLinkedList::length() const
 {
     // TODO: implement
-    return this->data.size();
+    return static_cast<int>(this->data.size());
 }
 // ===== END PART 3 (do not remove this marker) =====
