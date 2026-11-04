@@ -168,6 +168,7 @@ DoubleNode *DoublyLinkedList::detachValue(NodeValue value)
         if (this->headPtr->getValue() == value)
         {
             DoubleNode * nodeToReturn = this->detachFirst();
+            return nodeToReturn;
         }
         else
         {
@@ -189,6 +190,7 @@ DoubleNode *DoublyLinkedList::detachValue(NodeValue value)
             }
             currentPtr = currentPtr->getNext();
         }
+        return nullptr;
     }
 }
 
