@@ -446,10 +446,12 @@ int StdDoublyLinkedList::printForward() const
 int StdDoublyLinkedList::printBackward() const
 {
     int count = 0;
-    for (std::variant<int, double, std::string> v: this->data.rbegin())
+    auto begin = this->data.crbegin();
+    auto end = this->data.crend();
+    for (; begin != end; ++begin)
     {
-        std::visit([](auto x) { std::cout << x << " "; }, v);
-        count ++;
+        auto&& n = *begin;
+        std::visit([](auto x) { std::cout << x << " "; }, n);
     }
     return count;
 }
