@@ -163,7 +163,7 @@ DoubleNode *DoublyLinkedList::detachValue(NodeValue value)
 {
     // TODO: implement
     DoubleNode * currentPtr = this->headPtr;
-    if (this->headPtr->getNext() == nullptr)
+    if (this->headPtr == nullptr)
     {
         return nullptr;
     }
