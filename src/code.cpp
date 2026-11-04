@@ -163,9 +163,16 @@ DoubleNode *DoublyLinkedList::detachValue(NodeValue value)
 {
     // TODO: implement
     DoubleNode * currentPtr = this->headPtr;
-    if (this->headPtr == nullptr)
+    if (this->headPtr->getNext() == nullptr)
     {
-        return nullptr;
+        if (this->headPtr->getValue() == value)
+        {
+            DoubleNode * nodeToReturn = this->detachFirst();
+        }
+        else
+        {
+            return nullptr;
+        }
     }
     else
     {
