@@ -452,18 +452,19 @@ int StdDoublyLinkedList::printForward() const
 }
 
 // /// Print tail -> head (same format as Part 2). Return the number of values.
-// int StdDoublyLinkedList::printBackward() const
-// {
-//     int count = 0;
-//     auto begin = this->data.crbegin();
-//     auto end = this->data.crend();
-//     for (; begin != end; ++begin)
-//     {
-//         auto&& n = *begin;
-//         std::visit([](auto x) { std::cout << x << " "; }, n);
-//     }
-//     return count;
-// }
+int StdDoublyLinkedList::printBackward() const
+{
+    auto copy = this->data;
+    copy.reverse();
+    int count = 0;
+    for (std::variant<int, double, std::string> v: copy)
+    {
+        std::visit([](auto x) { std::cout << x << " "; }, v);
+        count ++;
+    }
+    copy.~list();
+    return count;
+}
 
 /// size() returns size_t, length() returns int.
 int StdDoublyLinkedList::length() const
