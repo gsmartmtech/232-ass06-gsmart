@@ -437,19 +437,19 @@ bool StdDoublyLinkedList::containsValue(NodeValue value) const
     }
 }
 
-/// Print head -> tail (same format as Part 2). Return the number of values.
-// int StdDoublyLinkedList::printForward() const
-// {
-//     // TODO: implement
+// Print head -> tail (same format as Part 2). Return the number of values.
+int StdDoublyLinkedList::printForward() const
+{
+    // TODO: implement
 
-//     int count = 0;
-//     for (std::variant<int, double, std::string> v: this->data)
-//     {
-//         std::visit([](auto x) { std::cout << x << " "; }, v);
-//         count ++;
-//     }
-//     return count;
-// }
+    int count = 0;
+    for (std::variant<int, double, std::string> v: this->data)
+    {
+        std::visit([](auto x) { std::cout << x << " "; }, v);
+        count ++;
+    }
+    return count;
+}
 
 // /// Print tail -> head (same format as Part 2). Return the number of values.
 // int StdDoublyLinkedList::printBackward() const
