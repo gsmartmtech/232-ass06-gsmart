@@ -30,7 +30,7 @@ DoubleNode::DoubleNode(NodeValue newValue)
 NodeValue DoubleNode::getValue() const
 {
     // TODO: return the value field
-    return NodeValue{this->value};
+    return this->value;
 }
 
 /// Const getter: return the previous node (or nullptr).
@@ -314,13 +314,12 @@ int DoublyLinkedList::printForward() const
     DoubleNode * currentPtr = this->headPtr;
     int count = 0;
     while (currentPtr != nullptr)
-    {
-        std::variant result = currentPtr->getValue();
-        
-        std::visit([](const auto& arg) 
-        {
-            std::cout << arg << ' \n';
-        }, result);
+    {   
+        auto visitor = [](auto&& arg) {
+        std::cout << arg << std::endl;
+        };
+
+        std::visit(visitor, currentPtr->getValue());
         count += 1;
         currentPtr = currentPtr->getNext();
     }
@@ -336,12 +335,11 @@ int DoublyLinkedList::printBackward() const
     int count = 0;
     while (currentPtr != nullptr)
     {
-        std::variant result = currentPtr->getValue();
-        
-        std::visit([](const auto& arg) 
-        {
-            std::cout << arg << ' \n';
-        }, result);
+        auto visitor = [](auto&& arg) {
+        std::cout << arg << std::endl;
+        };
+
+        std::visit(visitor, currentPtr->getValue());
         count += 1;
         currentPtr = currentPtr->getPrev();
     }
