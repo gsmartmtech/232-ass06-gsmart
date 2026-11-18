@@ -454,15 +454,12 @@ int StdDoublyLinkedList::printForward() const
 // /// Print tail -> head (same format as Part 2). Return the number of values.
 int StdDoublyLinkedList::printBackward() const
 {
-    auto copy = this->data;
-    copy.reverse();
     int count = 0;
-    for (std::variant<int, double, std::string> v: copy)
+    for (auto it = this->data.crbegin(); it != this->data.crend(); ++it)
     {
-        std::visit([](auto x) { std::cout << x << " "; }, v);
+        std::visit([](auto x) { std::cout << x << " "; }, *it);
         count ++;
     }
-    copy.~list();
     return count;
 }
 
