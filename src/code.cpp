@@ -438,32 +438,32 @@ bool StdDoublyLinkedList::containsValue(NodeValue value) const
 }
 
 /// Print head -> tail (same format as Part 2). Return the number of values.
-int StdDoublyLinkedList::printForward() const
-{
-    // TODO: implement
+// int StdDoublyLinkedList::printForward() const
+// {
+//     // TODO: implement
 
-    int count = 0;
-    for (std::variant<int, double, std::string> v: this->data)
-    {
-        std::visit([](auto x) { std::cout << x << " "; }, v);
-        count ++;
-    }
-    return count;
-}
+//     int count = 0;
+//     for (std::variant<int, double, std::string> v: this->data)
+//     {
+//         std::visit([](auto x) { std::cout << x << " "; }, v);
+//         count ++;
+//     }
+//     return count;
+// }
 
-/// Print tail -> head (same format as Part 2). Return the number of values.
-int StdDoublyLinkedList::printBackward() const
-{
-    int count = 0;
-    auto begin = this->data.crbegin();
-    auto end = this->data.crend();
-    for (; begin != end; ++begin)
-    {
-        auto&& n = *begin;
-        std::visit([](auto x) { std::cout << x << " "; }, n);
-    }
-    return count;
-}
+// /// Print tail -> head (same format as Part 2). Return the number of values.
+// int StdDoublyLinkedList::printBackward() const
+// {
+//     int count = 0;
+//     auto begin = this->data.crbegin();
+//     auto end = this->data.crend();
+//     for (; begin != end; ++begin)
+//     {
+//         auto&& n = *begin;
+//         std::visit([](auto x) { std::cout << x << " "; }, n);
+//     }
+//     return count;
+// }
 
 /// size() returns size_t, length() returns int.
 int StdDoublyLinkedList::length() const

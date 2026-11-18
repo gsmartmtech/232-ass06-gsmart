@@ -25,6 +25,7 @@ void test_push_increases_length(void)
     dlList.pushFrontValue(4);
     dlList.pushBackValue(5);
     TEST_ASSERT_EQUAL(2, dlList.length());
+    dlList.~DoublyLinkedList();
 }
 
 /// Create an EMPTY DoublyLinkedList.
@@ -53,6 +54,7 @@ void test_pop_order(void)
 
     TEST_ASSERT_EQUAL(3, std::get<int>(backResult.value()));
     TEST_ASSERT_EQUAL(1, std::get<int>(frontResult.value()));
+    dlList.~DoublyLinkedList();
 }
 
 /// Push one value, then call deleteValue with a value that is NOT in the list.
@@ -63,6 +65,7 @@ void test_delete_value_not_found(void)
     dlList.pushBackValue(1);
 
     TEST_ASSERT_EQUAL(nullptr, dlList.deleteValue(2));
+    dlList.~DoublyLinkedList();
 }
 
 /// Push 1, 2, 3 with pushBackValue. Call deleteValue(2).
@@ -81,6 +84,8 @@ void test_delete_middle_keeps_links(void)
 
     TEST_ASSERT_EQUAL(3, std::get<int>(result1.value()));
     TEST_ASSERT_EQUAL(1, std::get<int>(result2.value()));
+
+    dlList.~DoublyLinkedList();
 }
 
 // ============================================================
@@ -105,6 +110,10 @@ void test_std_delete_only_first(void)
     if (popResult.has_value())
     {
         TEST_ASSERT_EQUAL(2, std::get<int>(popResult.value()));
+    }
+    while (list.length() > 0)
+    {
+        list.popFrontValue();
     }
 }
 
